@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 var app = require('../app');
-var debug = require('debug')('d3graph:server');
+var debug = require('debug')('graphkinetic:server');
 var http = require('http');
 
 /**
