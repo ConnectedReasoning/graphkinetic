@@ -96,11 +96,11 @@ exports.links =  [{
                  ];
 exports.icons = {
                 icons: [
-                    {classificationId: 'A', iconName: 'img/bee.png'},
-                    {classificationId: 'B', iconName: 'img/doubleswoosh.png'},
-                    {classificationId: 'C', iconName: 'img/fire.png'},
-                    {classificationId: 'D', iconName: 'img/gradhat.png'},
-                    {classificationId: 'CSERV', iconName: 'img/blackstar.png'},
+                    {classificationId: 'A', iconName: 'content/img/bee.png'},
+                    {classificationId: 'B', iconName: 'content/img/doubleswoosh.png'},
+                    {classificationId: 'C', iconName: 'content/img/fire.png'},
+                    {classificationId: 'D', iconName: 'content/img/gradhat.png'},
+                    {classificationId: 'CSERV', iconName: 'content/img/blackstar.png'},
 
                 ]
         };
