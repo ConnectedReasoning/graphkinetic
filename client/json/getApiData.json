@@ -1,0 +1,25 @@
+ [
+    {
+      "id": "1",
+      "type": "Savings",
+      "name" : "Manuel Hernandez"
+    },
+    {
+      "id": "2",
+      "type": "checking",
+      "name" : "Nancy Hernandez"
+    },
+    {
+      "id": "3",
+      "type": "annuity",
+      "name" : "Oswaldo Hernandez"
+    },
+    {
+      "id": "4",
+      "type": "stocks",
+      "name" : "Peter Hernandez"
+    }
+
+]
+
+

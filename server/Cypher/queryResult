@@ -1,0 +1,490 @@
+{
+  "records": [
+    {
+      "keys": [
+        "s"
+      ],
+      "length": 1,
+      "_fields": [
+        {
+          "identity": {
+            "low": 304,
+            "high": 0
+          },
+          "labels": [
+            "locations"
+          ],
+          "properties": {
+            "locationsId": {
+              "low": 40,
+              "high": 0
+            },
+            "name": "A",
+            "location": "NEEDHAM",
+            "id": {
+              "low": 11595,
+              "high": 0
+            },
+            "descriptions": "Needham Site",
+            "classificationId": "",
+            "status": "OPERATING"
+          },
+          "id": "304"
+        }
+      ],
+      "_fieldLookup": {
+        "s": 0
+      }
+    },
+    {
+      "keys": [
+        "s"
+      ],
+      "length": 1,
+      "_fields": [
+        {
+          "identity": {
+            "low": 305,
+            "high": 0
+          },
+          "labels": [
+            "locations"
+          ],
+          "properties": {
+            "locationsId": "243",
+            "name": "A1",
+            "location": "PACKAGE",
+            "id": {
+              "low": 11617,
+              "high": 0
+            },
+            "descriptions": "Packaging Department",
+            "classificationId": "",
+            "status": "OPERATING"
+          },
+          "id": "305"
+        }
+      ],
+      "_fieldLookup": {
+        "s": 0
+      }
+    },
+    {
+      "keys": [
+        "s"
+      ],
+      "length": 1,
+      "_fields": [
+        {
+          "identity": {
+            "low": 306,
+            "high": 0
+          },
+          "labels": [
+            "locations"
+          ],
+          "properties": {
+            "locationsId": "95",
+            "name": "A11",
+            "location": "BPM3100",
+            "id": {
+              "low": 11566,
+              "high": 0
+            },
+            "descriptions": "#1 Liquid Packaging Line",
+            "classificationId": "",
+            "status": "OPERATING"
+          },
+          "id": "306"
+        }
+      ],
+      "_fieldLookup": {
+        "s": 0
+      }
+    },
+    {
+      "keys": [
+        "s"
+      ],
+      "length": 1,
+      "_fields": [
+        {
+          "identity": {
+            "low": 307,
+            "high": 0
+          },
+          "labels": [
+            "locations"
+          ],
+          "properties": {
+            "Status": "OPERATING",
+            "locationsId": "",
+            "name": "A12",
+            "location": "BPM3200",
+            "id": {
+              "low": 11567,
+              "high": 0
+            },
+            "descriptions": "2 Liquid Packaging Line",
+            "classificationId": ""
+          },
+          "id": "307"
+        }
+      ],
+      "_fieldLookup": {
+        "s": 0
+      }
+    },
+    {
+      "keys": [
+        "s"
+      ],
+      "length": 1,
+      "_fields": [
+        {
+          "identity": {
+            "low": 308,
+            "high": 0
+          },
+          "labels": [
+            "locations"
+          ],
+          "properties": {
+            "locationsId": "",
+            "name": "A121",
+            "location": "BR230",
+            "id": {
+              "low": 11565,
+              "high": 0
+            },
+            "descriptions": "CENTRAL Room Emergency Generator",
+            "classificationId": "",
+            "status": "OPERATING"
+          },
+          "id": "308"
+        }
+      ],
+      "_fieldLookup": {
+        "s": 0
+      }
+    },
+    {
+      "keys": [
+        "s"
+      ],
+      "length": 1,
+      "_fields": [
+        {
+          "identity": {
+            "low": 309,
+            "high": 0
+          },
+          "labels": [
+            "locations"
+          ],
+          "properties": {
+            "locationsId": "",
+            "name": "A122",
+            "location": "BR300",
+            "id": {
+              "low": 11568,
+              "high": 0
+            },
+            "descriptions": "CENTRAL Room Reciprocating Compressor",
+            "classificationId": "",
+            "status": "OPERATING"
+          },
+          "id": "309"
+        }
+      ],
+      "_fieldLookup": {
+        "s": 0
+      }
+    },
+    {
+      "keys": [
+        "s"
+      ],
+      "length": 1,
+      "_fields": [
+        {
+          "identity": {
+            "low": 310,
+            "high": 0
+          },
+          "labels": [
+            "locations"
+          ],
+          "properties": {
+            "locationsId": "",
+            "name": "A1221",
+            "location": "BR400",
+            "id": {
+              "low": 11570,
+              "high": 0
+            },
+            "descriptions": "Main CENTRAL- 50,000 Lb/Hr",
+            "classificationId": "",
+            "status": "OPERATING"
+          },
+          "id": "310"
+        }
+      ],
+      "_fieldLookup": {
+        "s": 0
+      }
+    },
+    {
+      "keys": [
+        "s"
+      ],
+      "length": 1,
+      "_fields": [
+        {
+          "identity": {
+            "low": 311,
+            "high": 0
+          },
+          "labels": [
+            "locations"
+          ],
+          "properties": {
+            "locationsId": "",
+            "name": "A1222",
+            "location": "PLANT-P1",
+            "id": {
+              "low": 11573,
+              "high": 0
+            },
+            "classificationId": "",
+            "descriptions": "Materials Processing Plant #1",
+            "status": "OPERATING"
+          },
+          "id": "311"
+        }
+      ],
+      "_fieldLookup": {
+        "s": 0
+      }
+    },
+    {
+      "keys": [
+        "s"
+      ],
+      "length": 1,
+      "_fields": [
+        {
+          "identity": {
+            "low": 312,
+            "high": 0
+          },
+          "labels": [
+            "locations"
+          ],
+          "properties": {
+            "locationsId": "",
+            "name": "A12221",
+            "location": "BR200",
+            "id": {
+              "low": 14234,
+              "high": 0
+            },
+            "descriptions": "HVAC System- Main Office",
+            "classificationId": "",
+            "status": "OPERATING"
+          },
+          "id": "312"
+        }
+      ],
+      "_fieldLookup": {
+        "s": 0
+      }
+    },
+    {
+      "keys": [
+        "s"
+      ],
+      "length": 1,
+      "_fields": [
+        {
+          "identity": {
+            "low": 313,
+            "high": 0
+          },
+          "labels": [
+            "locations"
+          ],
+          "properties": {
+            "locationsId": "",
+            "name": "A13",
+            "location": "",
+            "id": {
+              "low": 34534,
+              "high": 0
+            },
+            "descriptions": "Random name",
+            "classificationId": "",
+            "status": "OPERATING"
+          },
+          "id": "313"
+        }
+      ],
+      "_fieldLookup": {
+        "s": 0
+      }
+    },
+    {
+      "keys": [
+        "s"
+      ],
+      "length": 1,
+      "_fields": [
+        {
+          "identity": {
+            "low": 314,
+            "high": 0
+          },
+          "labels": [
+            "locations"
+          ],
+          "properties": {
+            "locationsId": "",
+            "name": "A131",
+            "location": "",
+            "id": {
+              "low": 39845,
+              "high": 0
+            },
+            "descriptions": "Isp e plurebus unum",
+            "classificationId": "",
+            "status": "OPERATING"
+          },
+          "id": "314"
+        }
+      ],
+      "_fieldLookup": {
+        "s": 0
+      }
+    },
+    {
+      "keys": [
+        "s"
+      ],
+      "length": 1,
+      "_fields": [
+        {
+          "identity": {
+            "low": 315,
+            "high": 0
+          },
+          "labels": [
+            "locations"
+          ],
+          "properties": {
+            "locationsId": "",
+            "name": "A132",
+            "location": "",
+            "id": {
+              "low": 95773,
+              "high": 0
+            },
+            "descriptions": "",
+            "classificationId": "",
+            "status": "OPERATING"
+          },
+          "id": "315"
+        }
+      ],
+      "_fieldLookup": {
+        "s": 0
+      }
+    },
+    {
+      "keys": [
+        "s"
+      ],
+      "length": 1,
+      "_fields": [
+        {
+          "identity": {
+            "low": 316,
+            "high": 0
+          },
+          "labels": [
+            "locations"
+          ],
+          "properties": {
+            "locationsId": "",
+            "name": "A2",
+            "location": "CENTRAL",
+            "id": {
+              "low": 11565,
+              "high": 0
+            },
+            "descriptions": "CENTRAL Room",
+            "classificationId": "",
+            "status": "OPERATING"
+          },
+          "id": "316"
+        }
+      ],
+      "_fieldLookup": {
+        "s": 0
+      }
+    }
+  ],
+  "summary": {
+    "statement": {
+      "text": "Match (p:locations{locationsId:40})-[*0..5]->(s) return s",
+      "parameters": {}
+    },
+    "statementType": "r",
+    "counters": {
+      "_stats": {
+        "nodesCreated": 0,
+        "nodesDeleted": 0,
+        "relationshipsCreated": 0,
+        "relationshipsDeleted": 0,
+        "propertiesSet": 0,
+        "labelsAdded": 0,
+        "labelsRemoved": 0,
+        "indexesAdded": 0,
+        "indexesRemoved": 0,
+        "constraintsAdded": 0,
+        "constraintsRemoved": 0
+      }
+    },
+    "updateStatistics": {
+      "_stats": {
+        "nodesCreated": 0,
+        "nodesDeleted": 0,
+        "relationshipsCreated": 0,
+        "relationshipsDeleted": 0,
+        "propertiesSet": 0,
+        "labelsAdded": 0,
+        "labelsRemoved": 0,
+        "indexesAdded": 0,
+        "indexesRemoved": 0,
+        "constraintsAdded": 0,
+        "constraintsRemoved": 0
+      }
+    },
+    "plan": false,
+    "profile": false,
+    "notifications": [],
+    "resultConsumedAfter": {
+      "low": 23,
+      "high": 0
+    },
+    "resultAvailableAfter": {
+      "low": 64,
+      "high": 0
+    }
+  },
+  "timings": {
+    "resultAvailableAfter": 64,
+    "resultConsumedAfter": 23,
+    "type": "bolt",
+    "totalTime": 87
+  }
+}

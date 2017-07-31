@@ -1,0 +1,92 @@
+
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h4 class="modal-title" id="myModalLabel">Style Settings</h4>
+</div>
+<div class="modal-body">
+    <form id="style_form">
+      <div class="form-group">
+        <label for="font_size">Font Size</label>
+        <input id="font_size" type="number" class="form-control" placeholder="" min="8" max="30">
+      </div>
+      <div class="form-group">
+        <label for="font_color">Font Color</label>
+        <select id="font_color" class="form-control">
+            <option value="#FFB6C1">Light Pink</option>
+            <option value="#DC143C">Crimson</option>
+            <option value="#FF69B4">Hot Pink</option>
+            <option value="#C71585">Violet Red</option>
+            <option value="#EE82EE">Violet</option>
+            <option value="#800080">Purple</option>
+            <option value="#9932CC">Dark Orchid</option>
+            <option value="#4B0082">Indigo</option>
+            <option value="#6A5ACD">Slate Blue</option>
+            <option value="#0000FF">Blue</option>
+            <option value="#0000CD">Medium Blue</option>
+            <option value="#00008">Dark Blue</option>
+            <option value="#6495ED">Cornflower Blue</option>
+            <option value="#00CED1">Dark Turquoise</option>
+            <option value="#008080">Teal</option>
+            <option value="#2E8B57">SeaGreen</option>
+            <option value="#32CD32">LimeGreen</option>
+            <option value="#008000">Green</option>
+            <option value="#808000">Olive</option>
+            <option value="#FFD700">Gold</option>
+            <option value="#DAA520">Goldenrod</option>
+            <option value="#FFA500">Orange</option>
+            <option value="#FF8C00">DarkOrange</option>
+            <option value="#A0522D">Sienna</option>
+            <option value="#FF6347">Tomato</option>
+            <option value="#FF4500">OrangeRed</option>
+            <option value="#808080">Gray</option>
+            <option value="#000000">Black</option>
+        </select>                  
+        </div>
+      <div class="form-group">
+        <label for="font_name">Font Type</label>
+        <select id="font_name" class="form-control">
+          <option value="serif">Times New Roman</option>
+          <option value="Nunito+Sans">Nunito Sans</option>
+          <option value="Caveat">Caveat</option>
+          <option value="Merriweather">MerriWeather</option>
+          <option value="Pirata+One">Pirata One</option>
+          <option value="Vidaloka">Vidaloka</option>
+        </select>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input id="is_bold" type="checkbox"> Bold
+        </label>
+      </div>
+    <button type="button" class="btn btn-d3graph" data-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-d3graph pull-right">Save changes</button>
+    </form>
+</div>
+<div class="modal-footer">
+
+</div>
+<script>
+  $("#style_form").submit(function( event ) {
+    event.preventDefault();
+    var fontColor = $("#font_color option:selected" )[0].value;
+    var bold = ($("#is_bold")[0].value === "on") ? "bold ": "";
+    var size =  $("#font_size")[0].value + "px ";
+    var name = $("#font_name option:selected" ).text();
+    var fontSetting = bold + size + name;
+    var nodes = svg.selectAll(".node")[0];
+    if(nodes !==  null && nodes.length > 0){
+        var selectedNodes = _.filter(nodes, function (node){
+            return node.attributes["selected"].value==="true";
+        });
+        if(selectedNodes.length > 0){
+            setSelectedStyle(selectedNodes, fontSetting, fontColor);
+        } else {
+            alert("No nodes have been selected");
+        }
+    }
+    $('#theModal').modal('hide')
+});
+</script>
+

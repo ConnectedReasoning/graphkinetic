@@ -1,0 +1,27 @@
+
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h4 class="modal-title" id="pngModalLabel">Save PNG</h4>
+</div>
+<div class="modal-body">
+    <form id="png_form">
+      <div class="form-group">
+        <label for="png_file">Save PNG as</label>
+        <input id="png_file" type="text" class="form-control" placeholder="">
+      </div>
+      <button type="button" class="btn btn-d3graph" data-dismiss="modal">Close</button>
+      <button type="button" id="save_png" class="btn btn-d3graph pull-right">Save changes</button>
+    </form>
+</div>
+<div class="modal-footer"> 
+</div>
+<script>
+  $("#png_form").submit(function(event) {
+    event.preventDefault();
+    saveSvgAsPng(document.getElementById("mySvg"), $("#png_file")[0].value, {backgroundColor:"#ffffff"});
+    $('#theModal').modal('hide')
+  });
+</script>
+

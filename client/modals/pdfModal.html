@@ -1,0 +1,29 @@
+
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h4 class="modal-title" id="pdfModalLabel">Save PDF</h4>
+</div>
+<div class="modal-body">
+    <form id="pdf_form">
+      <div class="form-group">
+        <label for="pdf_file">Save PDF as</label>
+        <input id="pdf_file" type="text" class="form-control" placeholder="">
+      </div>
+    <button type="button" class="btn btn-d3graph" data-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-d3graph pull-right">Save PDF</button>
+    </form>
+</div>
+<div class="modal-footer"> 
+</div>
+<script>
+  $("#pdf_form" ).submit(function(event) {
+    event.preventDefault();
+    svg_to_pdf(document.getElementById("mySvg"), function (pdf) {
+        download_pdf($("#pdf_file")[0].value, pdf.output("dataurlstring"));
+    });
+    $('#theModal').modal('hide')
+});
+</script>
+
