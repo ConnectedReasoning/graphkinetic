@@ -1,5 +1,5 @@
 {
-  "name": "d3graph",
+  "name": "graphkinetic",
   "version": "0.0.1",
   "private": true,
   "main": "bin/www",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ConnectedReasoning/d3graphneo.git"
+    "url": "git+https://github.com/ConnectedReasoning/graphkinetic.git"
   },
   "dependencies": {
     "body-parser": "^1.13.3",
@@ -42,7 +42,7 @@
   },
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/ConnectedReasoning/d3graphneo/issues"
+    "url": "https://github.com/ConnectedReasoning/graphkinetic/issues"
   },
-  "homepage": "https://github.com/ConnectedReasoning/d3graphneo#readme"
+  "homepage": "https://github.com/ConnectedReasoning/graphkinetic#readme"
 }
