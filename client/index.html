@@ -21,39 +21,46 @@
   <link rel="stylesheet" href="content/css/bootstrap.css">
 </head>
 <body>
-
-    <div class="container" >
-      <div class="well">
-        <div clas="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <button type="button" href="modals/pngModal.html" class="btn btn-d3graph btnModal">
-                Save as PNG
-              </button>
-              <button type="button" href="modals/pdfModal.html" class="btn btn-d3graph btnModal">
-                Save as PDF
-              </button>
-              <button type="button" href="modals/styleModal.html" class="btn btn-d3graph btnModal">
-                Style Settings
-              </button>
-              <button id="classification" type="button" href="modals/classificationModal.html" class="btn btn-d3graph btnModal">
-                Icon Settings
-              </button>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="well">
+            <div clas="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <button type="button" href="modals/pngModal.html" class="btn btn-d3graph btnModal">
+                    Save as PNG
+                  </button>
+                  <button type="button" href="modals/pdfModal.html" class="btn btn-d3graph btnModal">
+                    Save as PDF
+                  </button>
+                  <button type="button" href="modals/styleModal.html" class="btn btn-d3graph btnModal">
+                    Style Settings
+                  </button>
+                  <button id="classification" type="button" href="modals/classificationModal.html" class="btn btn-d3graph btnModal">
+                    Icon Settings
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <form id="filter_form" class="form-inline">
+                  <div class="form-group">
+                    <input id="filter" type="text" class="form-control" placeholder="Search">
+                    <button id="filter_button" type="submit" class="btn btn-d3graph">Select</button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <form id="filter_form" class="form-inline">
-              <div class="form-group">
-                <input id="filter" type="text" class="form-control" placeholder="Search">
-                <button id="filter_button" type="submit" class="btn btn-d3graph">Select</button>
-              </div>
-            </form>
-          </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div id="graphdiagram"></div> 
         </div>
       </div>
-      <div id="graphdiagram"></div> 
     </div>
     <div class="modal fade" id="theModal" tabindex="-1" role="dialog" aria-labelledby="pngModalLabel">
       <div class="modal-dialog modal-md" role="document">

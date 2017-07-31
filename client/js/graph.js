@@ -67,7 +67,7 @@ $("#filter_form").submit(function( event ) {
     }
 });
 
-var width = 700;
+var width = 400;
 var height = 700;
 
 var svg = d3.select("#graphdiagram").append("svg")
