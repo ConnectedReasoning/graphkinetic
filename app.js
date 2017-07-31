@@ -1,12 +1,12 @@
-var express = require('express');
-var path = require('path');
+const express = require('express');
+const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const routes = require('./server/routes/router');
 
-var app = express();
+const app = express();
 
 var env = process.env.NODE_ENV || 'development';
 app.locals.ENV = env;
@@ -29,6 +29,7 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
+
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
