@@ -153,9 +153,10 @@ function initSvg(){
     edgelabels.append('textPath')
         .attr('xlink:href',function(d,i) {return '#edgepath'+i})
         .style("pointer-events", "none")
-        .text(function(d,i){return 'label '+i});
+        .text(function(d,i){return ''});
 
-    force.on("tick", function () {
+
+        force.on("tick", function () {
         edges.attr({"x1": function (d) {return d.source.x;},
                     "y1": function (d) {return d.source.y;},
                     "x2": function (d) {return d.target.x;},
@@ -179,7 +180,9 @@ function initSvg(){
                 return 'rotate(0)';
                 }
         });
+            
     });
+        
     svg
         .on( "mousedown", function() {
             var p = d3.mouse( this);

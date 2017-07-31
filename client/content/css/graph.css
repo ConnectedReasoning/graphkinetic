@@ -15,7 +15,11 @@
     color: white;
     background: #1465ae;
     border-radius: 0;
-    margin:0px 20px 0px 0px;
+    margin:2px;
+    width:150px;
+}
+input#filter{
+    margin-bottom:20px
 }
 .btn.btn-d3graph:hover, .btn.btn-d3graph:focus, .btn.btn-d3graph.focus {
     color: #ddd;
@@ -26,7 +30,7 @@ div.modal-header{
     padding: 15px;
     background-color: #1465ae;
     color: white;
-    font-family: time-roman
+    font-family: 'nunito sans'
 }
 .modal-content{
     border-radius:0px;
@@ -41,6 +45,5 @@ div.modal-header{
 
 td{
     max-width: 100px;
-
      word-wrap:break-word;
 }
