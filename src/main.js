@@ -2,6 +2,11 @@ import environment from './environment';
 import {PLATFORM} from 'aurelia-pal';
 import 'babel-polyfill';
 import * as Bluebird from 'bluebird';
+import './css/dd.css';
+import './css/graph.css';
+import './css/materialize.min.css';
+//import materialize from 'materialize-css';
+//import d3 from 'd3';
 
 // remove out if you don't want a Promise polyfill (remove also from webpack.config.js)
 Bluebird.config({ warnings: { wForgottenReturn: false } });
