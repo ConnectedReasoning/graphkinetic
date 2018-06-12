@@ -6,27 +6,21 @@ import * as d3 from 'd3';
 export class app {
 
   constructor(element) {
+    this.lesmiserables = null;
     this.element = element;
-    console.log('in constructor element is ', element);
     this.width = 700;
     this.height = 700;
-    console.log('in constructor. d3 is ', d3);
-    console.log('this.graphdiagram', this.graphdiagram);
-    console.log('in constructor. this.svg is ', this.svg);
     this.initIcons.bind(this);
     this.initSvg.bind(this);
     this.getIcon.bind(this);
   }
   attached() {
-    console.log('attached');
     this.svg = d3.select(this.graphDiagram).append('svg')
     .attr('width', this.width)
     .attr('height', this.height);
-    console.log('this.svg ', this.svg);
     this.initIcons();
     this.initSvg();
   }
-
 
   initSvg() {
     const self = this;
@@ -35,27 +29,26 @@ export class app {
         .attr('height', '100%')
         .attr('fill', 'white');
 
-    console.log('in initSvg this.svg is ', this.svg);
-    const json = this.getData();
-    console.log('json ', json);
-    
+    this.lesmiserables = this.getData();
+    console.log('in init after getData json ', this.lesmiserables);
+
     const force = d3.layout.force()
         .gravity(0.053)
         .distance(350)
         .charge(-300)
         .size([this.width, this.height])
-        .nodes(json.nodes)
-        .links(json.links)
+        .nodes(this.lesmiserables.nodes)
+        .links(this.lesmiserables.links)
         .start();
 
 
     const edges = this.svg.selectAll('line')
-    .data(json.links)
-    .enter().append('line')
-    .attr('class', 'link');
+      .data(this.lesmiserables.links)
+      .enter().append('line')
+      .attr('class', 'link');
 
     const nodes = this.svg.selectAll('.node')
-      .data(json.nodes)
+      .data(this.lesmiserables.nodes)
       .enter().append('g')
       .attr('class', 'node')
       .attr('selected', 'false')
@@ -64,20 +57,16 @@ export class app {
     nodes.selected = false;
 
     nodes.each(function(d) {
-      
-      const icon = self.getIcon(this.__data__.CCLASSIFICATIONID);
-      console.log('this is ', this);
-      /*
+      const iconImage = self.getIcon(this.__data__.CCLASSIFICATIONID);
+      console.log('before appending image this is ', this);
       d3.select(this).append('image')
-          .attr('xlink: href', icon)
+          .attr('xlink:href', iconImage)
           .attr('x', -32)
           .attr('y', -20)
           .attr('width', 42)
           .attr('height', 42);
-      */
+      console.log('after appending image this is ', this);
     });
-
-    /*
     nodes.append('text')
       .attr('dx', 12)
       .attr('dy', '.35em')
@@ -86,10 +75,9 @@ export class app {
       .text(function(d) {
         return d.name;
       });
-    */
-   /*
+    /*  
     const edgepaths = this.svg.selectAll('.edgepath')
-      .data(json.links)
+      .data(this.lesmiserables.links)
       .enter()
       .append('path')
       .attr({'d': function(d) {return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y; },
@@ -102,7 +90,7 @@ export class app {
       .style('pointer-events', 'none');
 
     const edgelabels = this.svg.selectAll('.edgelabel')
-      .data(json.links)
+      .data(this.lesmiserables.links)
       .enter()
       .append('text')
       .style('pointer-events', 'none')
@@ -110,7 +98,7 @@ export class app {
         'id': function( d, i) {return 'edgelabel' + i; },
         'dx': 55,
         'dy': 0});
-
+    /*
     edgelabels.append('textPath')
       .attr('xlink: href', function( d, i) {return '#edgepath' + i;})
       .style('pointer-events', 'none')
@@ -144,8 +132,7 @@ export class app {
       });
       */
     });
-    
-   
+
     this.svg
       .on( 'mousedown', function() {
         const p = d3.mouse( this);
@@ -161,7 +148,7 @@ export class app {
         });
       })
       .on('mousemove', function() {
-        const s = this.svg.select( 'rect.selection');
+        const s = self.svg.select('rect.selection');
 
         if ( !s.empty()) {
           const p = (d3.mouse( this),
@@ -194,7 +181,7 @@ export class app {
         }
       })
       .on( 'mouseup', function() {
-        const s = svg.select( 'rect.selection');
+        const s = self.svg.select( 'rect.selection');
         let rect  = null;
         let selectBox = null;
         if ( !s.empty() ) {
@@ -233,7 +220,7 @@ export class app {
                 .style('stroke', '#333')
                 .style('stroke-width', '.5px');
             const name = d.name;
-            const foundLines = _.filter( svg.selectAll('line')[0], function(o, d ) {
+            const foundLines = _.filter( svg.selectAll('line')[0], function(o) {
               return (o.__data__.source.name === name || o.__data__.target.name === name);
             });
             if (foundLines !== null && typeof(foundLines) !== 'undefined' && foundLines.length > 0) {
@@ -242,7 +229,7 @@ export class app {
                 foundLine.style.strokeWidth = '.5epx';
               });
             }
-            const foundTexts = _.filter( svg.selectAll('.edgelabel')[0], function(o, d) {
+            const foundTexts = _.filter( svg.selectAll('.edgelabel')[0], function(o) {
               return (o.__data__.source.name === name || o.__data__.target.name === name);
             });
 
@@ -257,7 +244,6 @@ export class app {
         this.svg.select('.selection').remove();
       }
     );
-    
     console.log('at the end of init svg. svg is ', this.svg);
   }
 
@@ -283,7 +269,7 @@ export class app {
   updateIcon(key, image) {
     const iconsJSON = localStorage.getItem('icons');
     const icons = JSON.parse(iconsJSON);
-    const classificationId = key;
+    //const classificationId = key;
     const index = _.findIndex(icons, function(icon) {
       return icon.classificationId === key;
     });
@@ -306,7 +292,7 @@ export class app {
     });
     //$('#theModal').modal('hide')
   }
-    
+
   getIcon(classificationId) {
     let foundData = null;
     try {
@@ -354,7 +340,6 @@ export class app {
   }
 
   setSelectedStyle(selectedNodes, bold, size, name, fontColor) {
-    const that = this;
     const fontWeight = (bold.trim() === 'bold') ? '800' : '400';
     d3.selectAll('g.node')  //here's how you get all the nodes
       .each(function(d) {
@@ -383,215 +368,211 @@ export class app {
 
   getData() {
     return {nodes: [{
-        name: 'Myriel', 
-        group: 1, 
-        CCLASSIFICATIONID: 'A'
+      name: 'Myriel',
+      group: 1,
+      CCLASSIFICATIONID: 'A'
     }, {
-        name: 'Napoleon', 
-        group: 1, 
-        CCLASSIFICATIONID: 'A'
+      name: 'Napoleon',
+      group: 1,
+      CCLASSIFICATIONID: 'A'
     },  {
-        name: 'Mlle.Baptistine', 
-        group: 1, 
-        CCLASSIFICATIONID: 'A'
+      name: 'Mlle.Baptistine',
+      group: 1,
+      CCLASSIFICATIONID: 'A'
     }, {
-        name: 'Mme.Magloire', 
-        group: 1, 
-        CCLASSIFICATIONID: 'B'
+      name: 'Mme.Magloire',
+      group: 1,
+      CCLASSIFICATIONID: 'B'
     }, {
-        name: 'CountessdeLo', 
-        group: 1, 
-        CCLASSIFICATIONID: 'B'
+      name: 'CountessdeLo',
+      group: 1,
+      CCLASSIFICATIONID: 'B'
     }, {
-        name: 'Geborand', 
-        group: 1, 
-        CCLASSIFICATIONID: 'B'
+      name: 'Geborand',
+      group: 1,
+      CCLASSIFICATIONID: 'B'
     }, {
-        name: 'Champtercier', 
-        group: 1, 
-        CCLASSIFICATIONID: 'C'
+      name: 'Champtercier',
+      group: 1,
+      CCLASSIFICATIONID: 'C'
     }, {
-        name: 'Cravatte', 
-        group: 1, 
-        CCLASSIFICATIONID: 'C'
+      name: 'Cravatte',
+      group: 1,
+      CCLASSIFICATIONID: 'C'
     }, {
-        name: 'Count', 
-        group: 1, 
-        CCLASSIFICATIONID: 'D'
+      name: 'Count',
+      group: 1,
+      CCLASSIFICATIONID: 'D'
     }, {
-        name: 'OldMan', 
-        group: 1, 
-        CCLASSIFICATIONID: 'D'
+      name: 'OldMan',
+      group: 1,
+      CCLASSIFICATIONID: 'D'
     }, {
-        name: 'Labarre', 
-        group: 2, 
-        CCLASSIFICATIONID: 'D'
+      name: 'Labarre',
+      group: 2,
+      CCLASSIFICATIONID: 'D'
     }, {
-        name: 'Valjean', 
-        group: 2, 
-        CCLASSIFICATIONID: 'D'
+      name: 'Valjean',
+      group: 2,
+      CCLASSIFICATIONID: 'D'
     }, {
-        name: 'Marguerite', 
-        group: 3, 
-        CCLASSIFICATIONID: 'D'
+      name: 'Marguerite',
+      group: 3,
+      CCLASSIFICATIONID: 'D'
     }, {
-        name: 'Mme.deR', 
-        group: 2, 
-        CCLASSIFICATIONID: 'D'
+      name: 'Mme.deR',
+      group: 2,
+      CCLASSIFICATIONID: 'D'
     }, {
-        name: 'Isabeau', 
-        group: 2, 
-        CCLASSIFICATIONID: 'D'
+      name: 'Isabeau',
+      group: 2,
+      CCLASSIFICATIONID: 'D'
     }, {
-        name: 'Gervais', 
-        group: 2, 
-        CCLASSIFICATIONID: 'D'
+      name: 'Gervais',
+      group: 2,
+      CCLASSIFICATIONID: 'D'
     }, {
-        name: 'Tholomyes', 
-        group: 3, 
-        CCLASSIFICATIONID: 'D'
+      name: 'Tholomyes',
+      group: 3,
+      CCLASSIFICATIONID: 'D'
     }, {
-        name: 'Listolier', 
-        group: 3, 
-        CCLASSIFICATIONID: 'D'
+      name: 'Listolier',
+      group: 3,
+      CCLASSIFICATIONID: 'D'
     }, {
-        name: 'Fameuil', 
-        group: 3, 
-        CCLASSIFICATIONID: 'D'
+      name: 'Fameuil',
+      group: 3,
+      CCLASSIFICATIONID: 'D'
     }, {
-        name: 'Blacheville', 
-        group: 3, 
-        CCLASSIFICATIONID: 'D'
+      name: 'Blacheville',
+      group: 3,
+      CCLASSIFICATIONID: 'D'
     }, {
-        name: 'Favourite', 
-        group: 3, 
-        CCLASSIFICATIONID: 'D'
-    }
-    ], 
-
-    links: [{
-        source: 1, 
-        target: 0, 
+      name: 'Favourite',
+      group: 3,
+      CCLASSIFICATIONID: 'D'
+    }],
+      links: [{
+        source: 1,
+        target: 0,
         value: 1
-    }, {
-        source: 2, 
-        target: 0, 
+      }, {
+        source: 2,
+        target: 0,
         value: 8
-    }, {
-        source: 3, 
-        target: 0, 
+      }, {
+        source: 3,
+        target: 0,
         value: 10
-    }, {
-        source: 3, 
-        target: 2, 
+      }, {
+        source: 3,
+        target: 2,
         value: 6
-    }, {
-        source: 4, 
-        target: 0, 
+      }, {
+        source: 4,
+        target: 0,
         value: 1
-    }, {
-        source: 5, 
-        target: 0, 
+      }, {
+        source: 5,
+        target: 0,
         value: 1
-    }, {
-        source: 6, 
-        target: 0, 
+      }, {
+        source: 6,
+        target: 0,
         value: 1
-    }, {
-        source: 7, 
-        target: 0, 
+      }, {
+        source: 7,
+        target: 0,
         value: 1
-    }, {
-        source: 8, 
-        target: 0, 
+      }, {
+        source: 8,
+        target: 0,
         value: 2
-    }, {
-        source: 9, 
-        target: 0, 
+      }, {
+        source: 9,
+        target: 0,
         value: 1
-    }, {
-        source: 11, 
-        target: 10, 
+      }, {
+        source: 11,
+        target: 10,
         value: 1
-    }, {
-        source: 11, 
-        target: 3, 
+      }, {
+        source: 11,
+        target: 3,
         value: 3
-    }, {
-        source: 11, 
-        target: 2, 
+      }, {
+        source: 11,
+        target: 2,
         value: 3
-    }, {
-        source: 11, 
-        target: 0, 
+      }, {
+        source: 11,
+        target: 0,
         value: 5
-    }, {
-        source: 12, 
-        target: 11, 
+      }, {
+        source: 12,
+        target: 11,
         value: 1
-    }, {
-        source: 13, 
-        target: 11, 
+      }, {
+        source: 13,
+        target: 11,
         value: 1
-    }, {
-        source: 14, 
-        target: 11, 
+      }, {
+        source: 14,
+        target: 11,
         value: 1
-    }, {
-        source: 15, 
-        target: 11, 
+      }, {
+        source: 15,
+        target: 11,
         value: 1
-    }, {
-        source: 17, 
-        target: 16, 
+      }, {
+        source: 17,
+        target: 16,
         value: 4
-    }, {
-        source: 18, 
-        target: 16, 
+      }, {
+        source: 18,
+        target: 16,
         value: 4
-    }, {
-        source: 18, 
-        target: 17, 
+      }, {
+        source: 18,
+        target: 17,
         value: 4
-    }, {
-        source: 19, 
-        target: 16, 
+      }, {
+        source: 19,
+        target: 16,
         value: 4
-    }, {
-        source: 19, 
-        target: 17, 
+      }, {
+        source: 19,
+        target: 17,
         value: 4
-    }, {
-        source: 19, 
-        target: 18, 
+      }, {
+        source: 19,
+        target: 18,
         value: 4
-    }, {
-        source: 20, 
-        target: 16, 
+      }, {
+        source: 20,
+        target: 16,
         value: 3
-    }, {
-        source: 20, 
-        target: 17, 
+      }, {
+        source: 20,
+        target: 17,
         value: 3
-    }, {
-        source: 20, 
-        target: 18, 
+      }, {
+        source: 20,
+        target: 18,
         value: 3
-    }, {
-        source: 20, 
-        target: 19, 
+      }, {
+        source: 20,
+        target: 19,
         value: 4
-    }
-        ], 
-        icons: [
-            {classificationId: 'A', iconName: '/img/bee.png'}, 
-            {classificationId: 'B', iconName: '/img/doubleswoosh.png'}, 
-            {classificationId: 'C', iconName: '/img/fire.png'}, 
-            {classificationId: 'D', iconName: '/img/gradhat.png'}
-        ]
-      };
-  };
-
+      }],
+      icons: [
+          {classificationId: 'A', iconName: '/img/bee.png'},
+          {classificationId: 'B', iconName: '/img/doubleswoosh.png'},
+          {classificationId: 'C', iconName: '/img/fire.png'},
+          {classificationId: 'D', iconName: '/img/gradhat.png'}
+      ]
+    };
+  }
   showIcon(key) {
     const dropd = document.getElementById('image-dropdown_' + key);
     dropd.style.height = '120px';
@@ -599,20 +580,19 @@ export class app {
   }
 
   hideee(key) {
-      const dropd = document.getElementById('image-dropdown_' + key);
-      dropd.style.height = '30px';
-      dropd.style.overflow = 'hidden';
+    const dropd = document.getElementById('image-dropdown_' + key);
+    dropd.style.height = '30px';
+    dropd.style.overflow = 'hidden';
   }
 
   selectIcon(imgParent, key, image) {
     hideee(key);
-    
+
     const mainDIVV = document.getElementById('image-dropdown_' + key);
     imgParent.parentNode.removeChild(imgParent);
     mainDIVV.insertBefore(imgParent, mainDIVV.childNodes[0]);
     mainDIVV.style.overflow = 'hidden';
     mainDIVV.scrollTop = 0;
     updateIcon(key, image);
-      
   }
 }

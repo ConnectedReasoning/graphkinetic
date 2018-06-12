@@ -83,11 +83,14 @@ module.exports = ({production, server, extractCss, coverage, analyze} = {}) => (
     ]
   },
   plugins: [
+    new CopyWebpackPlugin([
+        {from: 'src/img', to: 'img' }
+    ]),
     new AureliaPlugin(),
     new ProvidePlugin({
       'Promise': 'bluebird'
     }),
-    new ModuleDependenciesPlugin({  
+    new ModuleDependenciesPlugin({
       'aurelia-testing': [ './compile-spy', './view-spy' ]
     }),
     new HtmlWebpackPlugin({
