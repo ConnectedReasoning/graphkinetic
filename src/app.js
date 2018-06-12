@@ -1,6 +1,5 @@
-import {inject, DOM, noView, bindable} from 'aurelia-framework'; 
+import {inject, DOM, noView, bindable} from 'aurelia-framework';
 import * as _ from 'lodash';
-
 import * as d3 from 'd3';
 @inject(DOM.Element)
 export class app {
@@ -8,8 +7,8 @@ export class app {
   constructor(element) {
     this.lesmiserables = null;
     this.element = element;
-    this.width = 700;
-    this.height = 700;
+    this.width = window.innerWidth * 0.55;
+    this.height = window.innerHeight * 0.75;
     this.initIcons.bind(this);
     this.initSvg.bind(this);
     this.getIcon.bind(this);
@@ -30,8 +29,6 @@ export class app {
         .attr('fill', 'white');
 
     this.lesmiserables = this.getData();
-    console.log('in init after getData json ', this.lesmiserables);
-
     const force = d3.layout.force()
         .gravity(0.053)
         .distance(350)
@@ -58,14 +55,12 @@ export class app {
 
     nodes.each(function(d) {
       const iconImage = self.getIcon(this.__data__.CCLASSIFICATIONID);
-      console.log('before appending image this is ', this);
       d3.select(this).append('image')
           .attr('xlink:href', iconImage)
           .attr('x', -32)
           .attr('y', -20)
           .attr('width', 42)
           .attr('height', 42);
-      console.log('after appending image this is ', this);
     });
     nodes.append('text')
       .attr('dx', 12)
@@ -75,7 +70,7 @@ export class app {
       .text(function(d) {
         return d.name;
       });
-    /*  
+    /*
     const edgepaths = this.svg.selectAll('.edgepath')
       .data(this.lesmiserables.links)
       .enter()
@@ -244,7 +239,6 @@ export class app {
         this.svg.select('.selection').remove();
       }
     );
-    console.log('at the end of init svg. svg is ', this.svg);
   }
 
   initIcons() {

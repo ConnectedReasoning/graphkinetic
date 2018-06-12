@@ -36,3 +36,14 @@ td{
     max-width: 100px;
      word-wrap:break-word;
 }
+.flex-container{
+    display:flex;
+}
+.flex-div{
+    width: 50%;
+    padding: 20px;
+}
+.flex-div button{
+    width:30%;
+    margin:10px;
+}

@@ -1,13 +1,12 @@
 import environment from './environment';
 import {PLATFORM} from 'aurelia-pal';
 import 'babel-polyfill';
+import 'jquery';
+import 'materialize-css';
 import * as Bluebird from 'bluebird';
 import './css/dd.css';
 import './css/graph.css';
 import './css/materialize.min.css';
-
-//import materialize from 'materialize-css';
-//import d3 from 'd3';
 
 // remove out if you don't want a Promise polyfill (remove also from webpack.config.js)
 Bluebird.config({ warnings: { wForgottenReturn: false } });
@@ -15,8 +14,8 @@ Bluebird.config({ warnings: { wForgottenReturn: false } });
 export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
+    .plugin(PLATFORM.moduleName('aurelia-materialize-bridge'), b => b.useAll())
     .feature(PLATFORM.moduleName('resources/index'));
-
   // Uncomment the line below to enable animation.
   // aurelia.use.plugin(PLATFORM.moduleName('aurelia-animator-css'));
   // if the css animator is enabled, add swap-order="after" to all router-view elements
