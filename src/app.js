@@ -38,6 +38,7 @@ export class app {
     console.log('in initSvg this.svg is ', this.svg);
     const json = this.getData();
     console.log('json ', json);
+    
     const force = d3.layout.force()
         .gravity(0.053)
         .distance(350)
@@ -61,17 +62,22 @@ export class app {
       .on('click', this.click)
       .call(force.drag);
     nodes.selected = false;
-    
+
     nodes.each(function(d) {
+      
       const icon = self.getIcon(this.__data__.CCLASSIFICATIONID);
+      console.log('this is ', this);
+      /*
       d3.select(this).append('image')
           .attr('xlink: href', icon)
           .attr('x', -32)
           .attr('y', -20)
           .attr('width', 42)
           .attr('height', 42);
+      */
     });
 
+    /*
     nodes.append('text')
       .attr('dx', 12)
       .attr('dy', '.35em')
@@ -80,7 +86,9 @@ export class app {
       .text(function(d) {
         return d.name;
       });
-    const edgepaths = self.svg.selectAll('.edgepath')
+    */
+   /*
+    const edgepaths = this.svg.selectAll('.edgepath')
       .data(json.links)
       .enter()
       .append('path')
@@ -107,19 +115,18 @@ export class app {
       .attr('xlink: href', function( d, i) {return '#edgepath' + i;})
       .style('pointer-events', 'none')
       .text(function(d, i) {return '';});
-
-
+    */
     force.on('tick',  function() {
       edges.attr({'x1': function(d) {return d.source.x;},
         'y1': function(d) {return d.source.y;},
         'x2': function(d) {return d.target.x;},
         'y2': function(d) {return d.target.y;}
-      }
-    );
+      });
 
       nodes.attr('transform', function(d) {
         return 'translate(' + d.x + ', ' + d.y + ')';
       });
+      /*
       edgepaths.attr('d', function(d) {
         const path = 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y;
         return path;
@@ -135,11 +142,14 @@ export class app {
           return 'rotate(0)';
         }
       });
+      */
     });
+    
+   
     this.svg
       .on( 'mousedown', function() {
         const p = d3.mouse( this);
-        svg.append( 'rect')
+        this.svg.append( 'rect')
         .attr({
           rx: 6,
           ry: 6,
@@ -150,11 +160,11 @@ export class app {
           height: 0
         });
       })
-      .on( 'mousemove', function() {
-        const s = svg.select( 'rect.selection');
+      .on('mousemove', function() {
+        const s = this.svg.select( 'rect.selection');
 
         if ( !s.empty()) {
-          const p = d3.mouse( this), 
+          const p = (d3.mouse( this),
 
             d = {
               x: parseInt( s.attr( 'x'), 10),
@@ -165,7 +175,7 @@ export class app {
             move = {
               x: p[0] - d.x,
               y: p[1] - d.y
-            };
+            });
 
           if ( move.x < 1 || (move.x * 2 < d.width)) {
             d.x = p[0];
@@ -185,15 +195,15 @@ export class app {
       })
       .on( 'mouseup', function() {
         const s = svg.select( 'rect.selection');
-        const rect  = null;
+        let rect  = null;
         let selectBox = null;
         if ( !s.empty() ) {
-        let p = d3.mouse( this), rect = {
+          let p = (d3.mouse( this), rect = {
             x: parseInt( s.attr( 'x'), 10),
             y: parseInt( s.attr( 'y'), 10),
             width: parseInt( s.attr( 'width'), 10),
             heighT: parseInt( s.attr( 'height'), 10)
-          }
+          });
           selectBox = {
             x1: rect.x,
             y1: rect.y,
@@ -244,16 +254,17 @@ export class app {
             }
           }
         });
-        svg.select('.selection').remove();
+        this.svg.select('.selection').remove();
       }
     );
+    
     console.log('at the end of init svg. svg is ', this.svg);
   }
 
   initIcons() {
-      const json = this.getData();
-      const icons = json.icons;
-      localStorage.setItem('icons', JSON.stringify(icons));
+    const json = this.getData();
+    const icons = json.icons;
+    localStorage.setItem('icons', JSON.stringify(icons));
   }
 
   click() {
@@ -266,7 +277,7 @@ export class app {
         .style('font-size', '22px')
         .style('font-family', 'sans-serif')
         .style('font-weight', '700');
-    svg.select('.selection').remove();
+    sthis.vg.select('.selection').remove();
   }
 
   updateIcon(key, image) {
@@ -283,7 +294,7 @@ export class app {
 
   applyIcons() {
     const nodes = svg.selectAll('.node');
-    svg.selectAll('g.node image').remove();
+    this.svg.selectAll('g.node image').remove();
     nodes.each(function(d) {
       const icon =  this.getIcon(this.__data__.CCLASSIFICATIONID);
       d3.select(this).append('image')
@@ -295,14 +306,14 @@ export class app {
     });
     //$('#theModal').modal('hide')
   }
-
+    
   getIcon(classificationId) {
     let foundData = null;
     try {
       const iconsJSON = localStorage.getItem('icons');
       const icons = JSON.parse(iconsJSON);
       foundData = _.find(icons, function(icon) {
-        return icon.classificationId===classificationId
+        return icon.classificationId === classificationId;
       });
     } catch (e) {
       console.log('An error occured', e);
@@ -320,24 +331,24 @@ export class app {
           }
       );
       if (found) {
-          d3.select(this).attr('selected', 'true');
-          d3.select(this).select('text').transition()
-              .duration(250)
-              .style('fill', 'red')
-              .style('stroke', 'red')
-              .style('stroke-width', '.35px')
-              .style('font-size', '18px')
-              .style('font-family', 'sans-serif');
+        d3.select(this).attr('selected', 'true');
+        d3.select(this).select('text').transition()
+            .duration(250)
+            .style('fill', 'red')
+            .style('stroke', 'red')
+            .style('stroke-width', '.35px')
+            .style('font-size', '18px')
+            .style('font-family', 'sans-serif');
       } else {
-          d3.select(this).attr('selected', 'false');
-          d3.select(this).select('text').transition()
-              .duration(250)
-              .attr('selected', 'true')
-              .style('fill', '#333')
-              .style('stroke', '#333')
-              .style('stroke-width', '.35px')
-              .style('font-size', '18px')
-              .style('font-family', 'sans-serif');
+        d3.select(this).attr('selected', 'false');
+        d3.select(this).select('text').transition()
+            .duration(250)
+            .attr('selected', 'true')
+            .style('fill', '#333')
+            .style('stroke', '#333')
+            .style('stroke-width', '.35px')
+            .style('font-size', '18px')
+            .style('font-family', 'sans-serif');
       }
     });
   }
@@ -371,214 +382,213 @@ export class app {
   }
 
   getData() {
-      return {
-          nodes: [{
-              name: 'Myriel', 
-              group: 1, 
-              CCLASSIFICATIONID: 'A'
-          }, {
-              name: 'Napoleon', 
-              group: 1, 
-              CCLASSIFICATIONID: 'A'
-          },  {
-              name: 'Mlle.Baptistine', 
-              group: 1, 
-              CCLASSIFICATIONID: 'A'
-          }, {
-              name: 'Mme.Magloire', 
-              group: 1, 
-              CCLASSIFICATIONID: 'B'
-          }, {
-              name: 'CountessdeLo', 
-              group: 1, 
-              CCLASSIFICATIONID: 'B'
-          }, {
-              name: 'Geborand', 
-              group: 1, 
-              CCLASSIFICATIONID: 'B'
-          }, {
-              name: 'Champtercier', 
-              group: 1, 
-              CCLASSIFICATIONID: 'C'
-          }, {
-              name: 'Cravatte', 
-              group: 1, 
-              CCLASSIFICATIONID: 'C'
-          }, {
-              name: 'Count', 
-              group: 1, 
-              CCLASSIFICATIONID: 'D'
-          }, {
-              name: 'OldMan', 
-              group: 1, 
-              CCLASSIFICATIONID: 'D'
-          }, {
-              name: 'Labarre', 
-              group: 2, 
-              CCLASSIFICATIONID: 'D'
-          }, {
-              name: 'Valjean', 
-              group: 2, 
-              CCLASSIFICATIONID: 'D'
-          }, {
-              name: 'Marguerite', 
-              group: 3, 
-              CCLASSIFICATIONID: 'D'
-          }, {
-              name: 'Mme.deR', 
-              group: 2, 
-              CCLASSIFICATIONID: 'D'
-          }, {
-              name: 'Isabeau', 
-              group: 2, 
-              CCLASSIFICATIONID: 'D'
-          }, {
-              name: 'Gervais', 
-              group: 2, 
-              CCLASSIFICATIONID: 'D'
-      }, {
-              name: 'Tholomyes', 
-              group: 3, 
-              CCLASSIFICATIONID: 'D'
-          }, {
-              name: 'Listolier', 
-              group: 3, 
-              CCLASSIFICATIONID: 'D'
-          }, {
-              name: 'Fameuil', 
-              group: 3, 
-              CCLASSIFICATIONID: 'D'
-          }, {
-              name: 'Blacheville', 
-              group: 3, 
-              CCLASSIFICATIONID: 'D'
-          }, {
-              name: 'Favourite', 
-              group: 3, 
-              CCLASSIFICATIONID: 'D'
-          }
-          ], 
+    return {nodes: [{
+        name: 'Myriel', 
+        group: 1, 
+        CCLASSIFICATIONID: 'A'
+    }, {
+        name: 'Napoleon', 
+        group: 1, 
+        CCLASSIFICATIONID: 'A'
+    },  {
+        name: 'Mlle.Baptistine', 
+        group: 1, 
+        CCLASSIFICATIONID: 'A'
+    }, {
+        name: 'Mme.Magloire', 
+        group: 1, 
+        CCLASSIFICATIONID: 'B'
+    }, {
+        name: 'CountessdeLo', 
+        group: 1, 
+        CCLASSIFICATIONID: 'B'
+    }, {
+        name: 'Geborand', 
+        group: 1, 
+        CCLASSIFICATIONID: 'B'
+    }, {
+        name: 'Champtercier', 
+        group: 1, 
+        CCLASSIFICATIONID: 'C'
+    }, {
+        name: 'Cravatte', 
+        group: 1, 
+        CCLASSIFICATIONID: 'C'
+    }, {
+        name: 'Count', 
+        group: 1, 
+        CCLASSIFICATIONID: 'D'
+    }, {
+        name: 'OldMan', 
+        group: 1, 
+        CCLASSIFICATIONID: 'D'
+    }, {
+        name: 'Labarre', 
+        group: 2, 
+        CCLASSIFICATIONID: 'D'
+    }, {
+        name: 'Valjean', 
+        group: 2, 
+        CCLASSIFICATIONID: 'D'
+    }, {
+        name: 'Marguerite', 
+        group: 3, 
+        CCLASSIFICATIONID: 'D'
+    }, {
+        name: 'Mme.deR', 
+        group: 2, 
+        CCLASSIFICATIONID: 'D'
+    }, {
+        name: 'Isabeau', 
+        group: 2, 
+        CCLASSIFICATIONID: 'D'
+    }, {
+        name: 'Gervais', 
+        group: 2, 
+        CCLASSIFICATIONID: 'D'
+    }, {
+        name: 'Tholomyes', 
+        group: 3, 
+        CCLASSIFICATIONID: 'D'
+    }, {
+        name: 'Listolier', 
+        group: 3, 
+        CCLASSIFICATIONID: 'D'
+    }, {
+        name: 'Fameuil', 
+        group: 3, 
+        CCLASSIFICATIONID: 'D'
+    }, {
+        name: 'Blacheville', 
+        group: 3, 
+        CCLASSIFICATIONID: 'D'
+    }, {
+        name: 'Favourite', 
+        group: 3, 
+        CCLASSIFICATIONID: 'D'
+    }
+    ], 
 
-          links: [{
-              source: 1, 
-              target: 0, 
-              value: 1
-          }, {
-              source: 2, 
-              target: 0, 
-              value: 8
-          }, {
-              source: 3, 
-              target: 0, 
-              value: 10
-          }, {
-              source: 3, 
-              target: 2, 
-              value: 6
-          }, {
-              source: 4, 
-              target: 0, 
-              value: 1
-          }, {
-              source: 5, 
-              target: 0, 
-              value: 1
-          }, {
-              source: 6, 
-              target: 0, 
-              value: 1
-          }, {
-              source: 7, 
-              target: 0, 
-              value: 1
-          }, {
-              source: 8, 
-              target: 0, 
-              value: 2
-          }, {
-              source: 9, 
-              target: 0, 
-              value: 1
-          }, {
-              source: 11, 
-              target: 10, 
-              value: 1
-          }, {
-              source: 11, 
-              target: 3, 
-              value: 3
-          }, {
-              source: 11, 
-              target: 2, 
-              value: 3
-          }, {
-              source: 11, 
-              target: 0, 
-              value: 5
-          }, {
-              source: 12, 
-              target: 11, 
-              value: 1
-          }, {
-              source: 13, 
-              target: 11, 
-              value: 1
-          }, {
-              source: 14, 
-              target: 11, 
-              value: 1
-          }, {
-              source: 15, 
-              target: 11, 
-              value: 1
-          }, {
-              source: 17, 
-              target: 16, 
-              value: 4
-          }, {
-              source: 18, 
-              target: 16, 
-              value: 4
-          }, {
-              source: 18, 
-              target: 17, 
-              value: 4
-          }, {
-              source: 19, 
-              target: 16, 
-              value: 4
-          }, {
-              source: 19, 
-              target: 17, 
-              value: 4
-          }, {
-              source: 19, 
-              target: 18, 
-              value: 4
-          }, {
-              source: 20, 
-              target: 16, 
-              value: 3
-          }, {
-              source: 20, 
-              target: 17, 
-              value: 3
-          }, {
-              source: 20, 
-              target: 18, 
-              value: 3
-          }, {
-              source: 20, 
-              target: 19, 
-              value: 4
-          }
-          ], 
-          icons: [
-              {classificationId: 'A', iconName: '/img/bee.png'}, 
-              {classificationId: 'B', iconName: '/img/doubleswoosh.png'}, 
-              {classificationId: 'C', iconName: '/img/fire.png'}, 
-              {classificationId: 'D', iconName: '/img/gradhat.png'}
-          ]
+    links: [{
+        source: 1, 
+        target: 0, 
+        value: 1
+    }, {
+        source: 2, 
+        target: 0, 
+        value: 8
+    }, {
+        source: 3, 
+        target: 0, 
+        value: 10
+    }, {
+        source: 3, 
+        target: 2, 
+        value: 6
+    }, {
+        source: 4, 
+        target: 0, 
+        value: 1
+    }, {
+        source: 5, 
+        target: 0, 
+        value: 1
+    }, {
+        source: 6, 
+        target: 0, 
+        value: 1
+    }, {
+        source: 7, 
+        target: 0, 
+        value: 1
+    }, {
+        source: 8, 
+        target: 0, 
+        value: 2
+    }, {
+        source: 9, 
+        target: 0, 
+        value: 1
+    }, {
+        source: 11, 
+        target: 10, 
+        value: 1
+    }, {
+        source: 11, 
+        target: 3, 
+        value: 3
+    }, {
+        source: 11, 
+        target: 2, 
+        value: 3
+    }, {
+        source: 11, 
+        target: 0, 
+        value: 5
+    }, {
+        source: 12, 
+        target: 11, 
+        value: 1
+    }, {
+        source: 13, 
+        target: 11, 
+        value: 1
+    }, {
+        source: 14, 
+        target: 11, 
+        value: 1
+    }, {
+        source: 15, 
+        target: 11, 
+        value: 1
+    }, {
+        source: 17, 
+        target: 16, 
+        value: 4
+    }, {
+        source: 18, 
+        target: 16, 
+        value: 4
+    }, {
+        source: 18, 
+        target: 17, 
+        value: 4
+    }, {
+        source: 19, 
+        target: 16, 
+        value: 4
+    }, {
+        source: 19, 
+        target: 17, 
+        value: 4
+    }, {
+        source: 19, 
+        target: 18, 
+        value: 4
+    }, {
+        source: 20, 
+        target: 16, 
+        value: 3
+    }, {
+        source: 20, 
+        target: 17, 
+        value: 3
+    }, {
+        source: 20, 
+        target: 18, 
+        value: 3
+    }, {
+        source: 20, 
+        target: 19, 
+        value: 4
+    }
+        ], 
+        icons: [
+            {classificationId: 'A', iconName: '/img/bee.png'}, 
+            {classificationId: 'B', iconName: '/img/doubleswoosh.png'}, 
+            {classificationId: 'C', iconName: '/img/fire.png'}, 
+            {classificationId: 'D', iconName: '/img/gradhat.png'}
+        ]
       };
   };
 
