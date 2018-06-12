@@ -16,16 +16,16 @@
           <div class="card-content grey lighten-4">
             <div class="flex-container">
               <div class="flex-div  grey lighten-3"> 
-                <button type="button" class="btn btn-primary" href="modals/pngModal.html" click.delegate="showPngModal()">
+                <button type="button" class="btn btn-primary" click.delegate="onOpenPngModal()">
                   Save as PNG
                 </button>
-                <button type="button" class="btn btn-primary" href="modals/pdfModal.html"y>
+                <button type="button" class="btn btn-primary" click.delegate="onOpenPdfModal()">
                   Save as PDF
                 </button>
-                <button type="button" class="btn btn-primary" href="modals/styleModal.html">
+                <button type="button" class="btn btn-primary" click.delegate="onOpenStyleModal()">
                   Style Settings
                 </button>
-                <button id="classification" type="button" href="modals/classificationModal.html" class="btn btn-primary btnModal">
+                <button type="button" class="btn btn-primary" click.delegate="onOpenClassificationModal()">
                   Icon Settings
                 </button>
               </div>
@@ -50,4 +50,37 @@
       </div>
     </div>
   </div>
+  <div id="style-modal" class="modal">
+    <div class="modal-content">
+      <h4>Modal Title</h4>
+    </div>
+    <div class="p-a-30">
+      modal content
+    </div>
+  </div>
+  <div id="pdf-modal" class="modal">
+    <div class="modal-content">
+      <h4>Modal Title</h4>
+    </div>
+    <div class="p-a-30">
+      modal content
+    </div>
+  </div>
+  <div id="png-modal" class="modal">
+    <div class="modal-content">
+      <h4>Modal Title</h4>
+    </div>
+    <div class="p-a-30">
+      modal content
+    </div>
+  </div>
+  <div id="classification-modal" class="modal">
+    <div class="modal-content">
+      <h4>Modal Title</h4>
+    </div>
+    <div class="p-a-30">
+      modal content
+    </div>
+  </div>
+
 </template>

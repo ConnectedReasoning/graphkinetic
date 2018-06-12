@@ -1,5 +1,6 @@
 import {inject, DOM, noView, bindable} from 'aurelia-framework';
 import * as _ from 'lodash';
+import 'materialize-css';
 import * as d3 from 'd3';
 @inject(DOM.Element)
 export class app {
@@ -19,6 +20,14 @@ export class app {
     .attr('height', this.height);
     this.initIcons();
     this.initSvg();
+    const pngModalElement = document.querySelectorAll('#png-modal');
+    this.pngModal = M.Modal.init(pngModalElement, null);
+    const pdfModalElement = document.querySelectorAll('#pdf-modal');
+    this.pdfModal = M.Modal.init(pdfModalElement, null);
+    const styleModalElement = document.querySelectorAll('#style-modal');
+    this.styleModal = M.Modal.init(styleModalElement, null);
+    const classificationModalElement = document.querySelectorAll('#classification-modal');
+    this.classificationModal = M.Modal.init(classificationModalElement, null);
   }
 
   initSvg() {
@@ -258,6 +267,34 @@ export class app {
         .style('font-family', 'sans-serif')
         .style('font-weight', '700');
     sthis.vg.select('.selection').remove();
+  }
+
+  onOpenStyleModal() {
+    this.styleModal[0].open();
+  }
+  onCloseStyleModal() {
+    this.styleModal.close();
+  }
+
+  onOpenPdfModal() {
+    this.pdfModal[0].open();
+  }
+  onClosePdfModal() {
+    this.pdfModal.close();
+  }
+
+  onOpenPngModal() {
+    this.pngModal[0].open();
+  }
+  onClosePngModal() {
+    this.pngModal.close();
+  }
+
+  onOpenClassificationModal() {
+    this.classificationModal[0].open();
+  }
+  onCloseClassificationModal() {
+    this.classificationModal.close();
   }
 
   updateIcon(key, image) {
