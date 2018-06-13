@@ -7,6 +7,7 @@ import * as Bluebird from 'bluebird';
 import './css/dd.css';
 import './css/graph.css';
 import './css/materialize.min.css';
+import './css/common.css';
 
 // remove out if you don't want a Promise polyfill (remove also from webpack.config.js)
 Bluebird.config({ warnings: { wForgottenReturn: false } });

@@ -76,10 +76,39 @@
   </div>
   <div id="classification-modal" class="modal">
     <div class="modal-content">
-      <h4>Modal Title</h4>
+      <h4 class="modal-title" id="myModalLabel">Classification Settings</h4>
     </div>
     <div class="p-a-30">
-      modal content
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nodes</th>
+            <th>Current Icon</th>
+            <th>New Icon</th>
+          </tr>
+        <tbody>
+        </thead>
+          <tr repeat.for="group of groups">
+          <td>${group.id}</td>
+          <td>${group.count}</td>
+          <td><img src='${group.icon}' width=30 height=30 /></td>
+          <td>
+              <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Drop Me!</a>
+              <!-- Dropdown Structure -->
+              <ul id='dropdown' class='dropdown-content'>
+                <li><a href="#!">one</a></li>
+                <li><a href="#!">two</a></li>
+                <li class="divider" tabindex="-1"></li>
+                <li><a href="#!">three</a></li>
+                <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
+                <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
+              </ul>
+          </td>
+        </tbody>
+      </table>
+      <button id="btnApplyIcon" class="btn btn-primary " click.delegate("applyIcons()")>Apply</button>
+
     </div>
   </div>
 

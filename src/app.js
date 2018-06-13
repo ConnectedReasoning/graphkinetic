@@ -2,6 +2,7 @@ import {inject, DOM, noView, bindable} from 'aurelia-framework';
 import * as _ from 'lodash';
 import 'materialize-css';
 import * as d3 from 'd3';
+import * as $ from 'jquery';
 @inject(DOM.Element)
 export class app {
 
@@ -28,6 +29,9 @@ export class app {
     this.styleModal = M.Modal.init(styleModalElement, null);
     const classificationModalElement = document.querySelectorAll('#classification-modal');
     this.classificationModal = M.Modal.init(classificationModalElement, null);
+   // const elems = document.querySelectorAll('.dropdown-trigger');
+    //const dropdowns = M.Dropdown.init(elems, options);
+    $('.dropdown-trigger').dropdown();
   }
 
   initSvg() {
@@ -291,6 +295,24 @@ export class app {
   }
 
   onOpenClassificationModal() {
+    console.log('in onOpenClassificationModal');
+    const groupedNodes = _.groupBy(this.lesmiserables.nodes, 'CCLASSIFICATIONID');
+    this.groups = [];
+    const groupNames = Object.getOwnPropertyNames(groupedNodes);
+    console.log('groupNames is ', groupNames);
+    
+    groupNames.forEach( (key) => {
+      if (groupedNodes.hasOwnProperty(key)) {
+        this.groups.push(groupedNodes[key]);
+      }
+    });
+    this.groups.forEach((g) => {
+      g.icon = this.getIcon(g[0].CCLASSIFICATIONID);
+      g.id = g[0].CCLASSIFICATIONID;
+      g.count = g.length;
+    });
+    console.log('in openClassificationModal this.groups is ', this.groups);
+  
     this.classificationModal[0].open();
   }
   onCloseClassificationModal() {
