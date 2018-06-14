@@ -47,3 +47,6 @@ td{
     width:30%;
     margin:10px;
 }
+.dropdown-trigger.btn{
+    width:200px;
+}

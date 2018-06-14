@@ -16,6 +16,8 @@ export class app {
     this.getIcon.bind(this);
   }
   attached() {
+    const dropdowns = $('.dropdown-trigger');
+    console.log('in attached the dropdowns are', dropdowns);
     this.svg = d3.select(this.graphDiagram).append('svg')
     .attr('width', this.width)
     .attr('height', this.height);
@@ -29,9 +31,6 @@ export class app {
     this.styleModal = M.Modal.init(styleModalElement, null);
     const classificationModalElement = document.querySelectorAll('#classification-modal');
     this.classificationModal = M.Modal.init(classificationModalElement, null);
-   // const elems = document.querySelectorAll('.dropdown-trigger');
-    //const dropdowns = M.Dropdown.init(elems, options);
-    $('.dropdown-trigger').dropdown();
   }
 
   initSvg() {
@@ -311,7 +310,10 @@ export class app {
       g.id = g[0].CCLASSIFICATIONID;
       g.count = g.length;
     });
-    console.log('in openClassificationModal this.groups is ', this.groups);
+    setTimeout(() => {
+      const elems = document.querySelectorAll('.dropdown-trigger');
+      M.Dropdown.init(elems, null);
+    }, 500);
   
     this.classificationModal[0].open();
   }
