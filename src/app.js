@@ -80,36 +80,8 @@ export class app {
       .style('font-size', '18px')
       .text(function(d) {
         return d.name;
-      });
-    /*
-    const edgepaths = this.svg.selectAll('.edgepath')
-      .data(this.lesmiserables.links)
-      .enter()
-      .append('path')
-      .attr({'d': function(d) {return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y; },
-        'class': 'edgepath',
-        'fill-opacity': 0,
-        'stroke-opacity': 0,
-        'fill': 'blue',
-        'stroke': 'red',
-        'id': function( d, i) {return 'edgepath' + i; }})
-      .style('pointer-events', 'none');
-
-    const edgelabels = this.svg.selectAll('.edgelabel')
-      .data(this.lesmiserables.links)
-      .enter()
-      .append('text')
-      .style('pointer-events', 'none')
-      .attr({'class': 'edgelabel',
-        'id': function( d, i) {return 'edgelabel' + i; },
-        'dx': 55,
-        'dy': 0});
-    /*
-    edgelabels.append('textPath')
-      .attr('xlink: href', function( d, i) {return '#edgepath' + i;})
-      .style('pointer-events', 'none')
-      .text(function(d, i) {return '';});
-    */
+      }
+    );
     force.on('tick',  function() {
       edges.attr({'x1': function(d) {return d.source.x;},
         'y1': function(d) {return d.source.y;},
@@ -120,136 +92,7 @@ export class app {
       nodes.attr('transform', function(d) {
         return 'translate(' + d.x + ', ' + d.y + ')';
       });
-      /*
-      edgepaths.attr('d', function(d) {
-        const path = 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y;
-        return path;
-      });
-
-      edgelabels.attr('transform', function(d, i) {
-        if (d.target.x < d.source.x) {
-          bbox = this.getBBox();
-          rx = bbox.x + bbox.width / 2;
-          ry = bbox.y + bbox.height / 2;
-          return 'rotate(180 ' + rx + ' ' + ry + ')';
-        } else {
-          return 'rotate(0)';
-        }
-      });
-      */
     });
-
-    this.svg
-      .on( 'mousedown', function() {
-        const p = d3.mouse( this);
-        this.svg.append( 'rect')
-        .attr({
-          rx: 6,
-          ry: 6,
-          class: 'selection',
-          x: p[0],
-          y: p[1],
-          width: 0,
-          height: 0
-        });
-      })
-      .on('mousemove', function() {
-        const s = self.svg.select('rect.selection');
-
-        if ( !s.empty()) {
-          const p = (d3.mouse( this),
-
-            d = {
-              x: parseInt( s.attr( 'x'), 10),
-              y: parseInt( s.attr( 'y'), 10),
-              width: parseInt( s.attr( 'width'), 10),
-              height: parseInt( s.attr( 'height'), 10)
-            },
-            move = {
-              x: p[0] - d.x,
-              y: p[1] - d.y
-            });
-
-          if ( move.x < 1 || (move.x * 2 < d.width)) {
-            d.x = p[0];
-            d.width -= move.x;
-          } else {
-            d.width = move.x;
-          }
-
-          if ( move.y < 1 || (move.y * 2 < d.height)) {
-            d.y = p[1];
-            d.height -= move.y;
-          } else {
-            d.height = move.y;
-          }
-          s.attr( d);
-        }
-      })
-      .on( 'mouseup', function() {
-        const s = self.svg.select( 'rect.selection');
-        let rect  = null;
-        let selectBox = null;
-        if ( !s.empty() ) {
-          let p = (d3.mouse( this), rect = {
-            x: parseInt( s.attr( 'x'), 10),
-            y: parseInt( s.attr( 'y'), 10),
-            width: parseInt( s.attr( 'width'), 10),
-            heighT: parseInt( s.attr( 'height'), 10)
-          });
-          selectBox = {
-            x1: rect.x,
-            y1: rect.y,
-            x2: rect.x + rect.width,
-            y2: rect.y + rect.height
-          };
-        }
-        d3.selectAll('g.node')  //here's how you get all the nodes
-        .each(function(d, that) {
-                // your update code here as it was in your example
-          let position = this.attributes.transform.value.replace('translate(', '').replace(')', '');
-          position = position.split(', ');
-          const x = position[0];
-          const y = position[1];
-          if (selectBox !== null && typeof(selectBox) !== 'undefined' && x > selectBox.x1 && x < selectBox.x2 && y > selectBox.y1 && y < selectBox.y2) {
-            d3.select(this).attr('selected', 'true');
-            d3.select(this).select('text').transition()
-                .duration(250)
-                .style('fill', 'red')
-                .style('stroke', 'red')
-                .style('stroke-width', '.5px');
-          } else {
-            d3.select(this).attr('selected', 'false');
-            d3.select(this).select('text').transition()
-                .duration(250)
-                .style('fill', '#333')
-                .style('stroke', '#333')
-                .style('stroke-width', '.5px');
-            const name = d.name;
-            const foundLines = _.filter( svg.selectAll('line')[0], function(o) {
-              return (o.__data__.source.name === name || o.__data__.target.name === name);
-            });
-            if (foundLines !== null && typeof(foundLines) !== 'undefined' && foundLines.length > 0) {
-              _.forEach(foundLines, function(foundLine) {
-                foundLine.style.stroke = '#ccc';
-                foundLine.style.strokeWidth = '.5epx';
-              });
-            }
-            const foundTexts = _.filter( svg.selectAll('.edgelabel')[0], function(o) {
-              return (o.__data__.source.name === name || o.__data__.target.name === name);
-            });
-
-            if (foundTexts !== null && typeof(foundTexts) !== 'undefined' && foundTexts.length > 0) {
-              _.forEach(foundTexts, function(foundText) {
-                foundText.style.font = '10px sans-serif';
-                foundText.style.fill = '#ccc';
-              });
-            }
-          }
-        });
-        this.svg.select('.selection').remove();
-      }
-    );
   }
 
   initIcons() {
@@ -257,19 +100,6 @@ export class app {
     this.icons = json.icons;
     this.images = json.images;
     localStorage.setItem('icons', JSON.stringify(this.icons));
-  }
-
-  click() {
-    d3.select(this).attr('selected', 'true');
-    d3.select(this).select('text').transition()
-        .duration(250)
-        .style('fill', 'red')
-        .style('stroke', 'red')
-        .style('stroke-width', '.35px')
-        .style('font-size', '22px')
-        .style('font-family', 'sans-serif')
-        .style('font-weight', '700');
-    sthis.vg.select('.selection').remove();
   }
 
   onOpenStyleModal() {
