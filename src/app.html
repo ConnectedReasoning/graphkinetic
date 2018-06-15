@@ -87,25 +87,24 @@
             <th>Current Icon</th>
             <th>New Icon</th>
           </tr>
-        <tbody>
         </thead>
+        <tbody>
           <tr repeat.for="group of groups">
-          <td>${group.id}</td>
-          <td>${group.count}</td>
-          <td><img src='${group.icon}' width=30 height=30 /></td>
-          <td>
-            <!-- Dropdown Trigger -->
-            <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Drop Me!</a>
-
-            <!-- Dropdown Structure -->
-            <ul id='dropdown1' class='dropdown-content'>
-              <li>Select Image</li>
-              <li class='img_holder' repeat.for="icon of icons" click.delegate='selectIcon(icon,key)'><img src="" />${icon.name}</li> 
-            </ul>
-          </td>
+            <td>${group.id}</td>
+            <td>${group.count}</td>
+            <td><img src='${group.icon}' width=30 height=30 /></td>
+            <td>
+              <a class='dropdown-trigger btn' href='#' data-target='dropdown_${group.id}'>Select Icon</a>
+              <ul id='dropdown_${group.id}' class='dropdown-content'>
+                <li class='img_holder' repeat.for="image of images" click.delegate="updateIcon(image, group.id)">
+                  <img src="${image}" />
+                </li> 
+              </ul>
+            </td>
+          </tr>
         </tbody>
       </table>
-      <button id="btnApplyIcon" class="btn btn-primary " click.delegate("applyIcons()")>Apply</button>
+      <button id="btnApplyIcon" class="btn btn-primary " click.delegate="applyIcons()">Apply</button>
 
     </div>
   </div>

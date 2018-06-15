@@ -14,10 +14,9 @@ export class app {
     this.initIcons.bind(this);
     this.initSvg.bind(this);
     this.getIcon.bind(this);
+    this.selectedIcon = null;
   }
   attached() {
-    const dropdowns = $('.dropdown-trigger');
-    console.log('in attached the dropdowns are', dropdowns);
     this.svg = d3.select(this.graphDiagram).append('svg')
     .attr('width', this.width)
     .attr('height', this.height);
@@ -255,8 +254,9 @@ export class app {
 
   initIcons() {
     const json = this.getData();
-    const icons = json.icons;
-    localStorage.setItem('icons', JSON.stringify(icons));
+    this.icons = json.icons;
+    this.images = json.images;
+    localStorage.setItem('icons', JSON.stringify(this.icons));
   }
 
   click() {
@@ -294,12 +294,14 @@ export class app {
   }
 
   onOpenClassificationModal() {
-    console.log('in onOpenClassificationModal');
+    this.setOpenClassificationModalContent();
+    this.classificationModal[0].open();
+  }
+  setOpenClassificationModalContent() {
     const groupedNodes = _.groupBy(this.lesmiserables.nodes, 'CCLASSIFICATIONID');
     this.groups = [];
     const groupNames = Object.getOwnPropertyNames(groupedNodes);
-    console.log('groupNames is ', groupNames);
-    
+
     groupNames.forEach( (key) => {
       if (groupedNodes.hasOwnProperty(key)) {
         this.groups.push(groupedNodes[key]);
@@ -314,38 +316,36 @@ export class app {
       const elems = document.querySelectorAll('.dropdown-trigger');
       M.Dropdown.init(elems, null);
     }, 500);
-  
-    this.classificationModal[0].open();
-  }
-  onCloseClassificationModal() {
-    this.classificationModal.close();
   }
 
-  updateIcon(key, image) {
-    const iconsJSON = localStorage.getItem('icons');
-    const icons = JSON.parse(iconsJSON);
-    //const classificationId = key;
-    const index = _.findIndex(icons, function(icon) {
+  onCloseClassificationModal() {
+    this.classificationModal[0].close();
+  }
+
+  updateIcon(iconname, key) {
+    const index = _.findIndex(this.icons, function(icon) {
       return icon.classificationId === key;
     });
-    icons[index].iconName = image;
 
-    localStorage.setItem('icons', JSON.stringify(icons));
+    this.icons[index].iconName = iconname;
+    localStorage.setItem('icons', JSON.stringify(this.icons));
+    this.setOpenClassificationModalContent();
   }
 
   applyIcons() {
-    const nodes = svg.selectAll('.node');
+    const self = this;
+    const nodes = this.svg.selectAll('.node');
     this.svg.selectAll('g.node image').remove();
     nodes.each(function(d) {
-      const icon =  this.getIcon(this.__data__.CCLASSIFICATIONID);
+      const icon =  self.getIcon(d.CCLASSIFICATIONID);
       d3.select(this).append('image')
-          .attr('xlink: href', icon)
+          .attr('xlink:href', icon)
           .attr('x', -32)
           .attr('y', -20)
           .attr('width', 42)
           .attr('height', 42);
     });
-    //$('#theModal').modal('hide')
+    this.onCloseClassificationModal();
   }
 
   getIcon(classificationId) {
@@ -625,6 +625,13 @@ export class app {
           {classificationId: 'B', iconName: '/img/doubleswoosh.png'},
           {classificationId: 'C', iconName: '/img/fire.png'},
           {classificationId: 'D', iconName: '/img/gradhat.png'}
+      ],
+      images: [
+        '/img/bee.png',
+        '/img/doubleswoosh.png',
+        '/img/fire.png',
+        '/img/gradhat.png',
+        '/img/greenshield.jpg'
       ]
     };
   }
@@ -632,22 +639,5 @@ export class app {
     const dropd = document.getElementById('image-dropdown_' + key);
     dropd.style.height = '120px';
     dropd.style.overflow = 'scroll';
-  }
-
-  hideee(key) {
-    const dropd = document.getElementById('image-dropdown_' + key);
-    dropd.style.height = '30px';
-    dropd.style.overflow = 'hidden';
-  }
-
-  selectIcon(imgParent, key, image) {
-    hideee(key);
-
-    const mainDIVV = document.getElementById('image-dropdown_' + key);
-    imgParent.parentNode.removeChild(imgParent);
-    mainDIVV.insertBefore(imgParent, mainDIVV.childNodes[0]);
-    mainDIVV.style.overflow = 'hidden';
-    mainDIVV.scrollTop = 0;
-    updateIcon(key, image);
   }
 }
