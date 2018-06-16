@@ -60,8 +60,8 @@
           <input id="is_bold" type="checkbox"> Bold
         </label>
       </div>
-    <button type="button" class="btn btn-d3graph" data-dismiss="modal">Close</button>
-    <button type="submit" class="btn btn-d3graph pull-right">Save changes</button>
+    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-primary pull-right">Save changes</button>
     </form>
 </div>
 <div class="modal-footer">
@@ -71,17 +71,17 @@
   $("#style_form").submit(function( event ) {
     event.preventDefault();
     var fontColor = $("#font_color option:selected" )[0].value;
-    var bold = ($("#is_bold")[0].value === "on") ? "bold ": "";
-    var size =  $("#font_size")[0].value + "px ";
-    var name = $("#font_name option:selected" ).text();
-    var fontSetting = bold + size + name;
+    var isBold = ($("#is_bold")[0].value === "on") ? "bold ": "";
+    var fontSize =  $("#font_size")[0].value + "px ";
+    var fontFamily = $("#font_name option:selected" ).text();
+
     var nodes = svg.selectAll(".node")[0];
     if(nodes !==  null && nodes.length > 0){
         var selectedNodes = _.filter(nodes, function (node){
             return node.attributes["selected"].value==="true";
         });
         if(selectedNodes.length > 0){
-            setSelectedStyle(selectedNodes, fontSetting, fontColor);
+            setSelectedStyle(selectedNodes, fontColor, fontSize, fontFamily, isBold);
         } else {
             alert("No nodes have been selected");
         }

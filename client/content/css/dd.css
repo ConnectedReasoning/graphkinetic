@@ -7,13 +7,16 @@
   overflow: hidden;
 }
 /*#image-dropdown:hover {} */
-
+.btn-search{
+  margin-top: -20px;
+}
 .image-dropdown .img_holder {
   cursor: pointer;
 }
 .image-dropdown img.flagimgs {
   height: 30px;
 }
-.image-dropdown span.iTEXT {
+.image-dropdown div.iTEXT {
   position: relative;
+  height:32px;
 }

@@ -14,12 +14,12 @@ $('#theModal').on('shown.bs.modal', function (e) {
         var icon = getIcon(key)
         var markup = "<tr>" + 
                      "<td>" + key + "</td><td>" + names.join(",") + "</td>" +
-                     "<td><img src='" + icon + "' width=30 height=30 /></td>" + 
+                     "<td><img src='" + icon + "' width=24 height=24 /></td>" + 
                     "<td>" +
                         "<div id='image-dropdown_" + key + "' class='image-dropdown'  onmouseleave='hideee(\"" + key + "\");'>" +
 
                             "<div class='img_holder' onclick='myfuunc(this, \"" + key + "\", \"\");' onmouseover='showww(\"" + key + "\");'>" +
-                                "<img class='flagimgs first' src='' height=30 width=30 /> <span class='iTEXT'>Select Image</span>" +
+                                "<div class='iTEXT'>Select Image</div>" +
                             "</div>" +                       
                             "<div class='img_holder' onclick='myfuunc(this, \"" + key + "\", \"content/img/bee.png\");' onmouseover='showww(\"" + key + "\");'>" +
                                 "<img class='flagimgs first' src='/content/img/bee.png' height=30 width=30 /> <span class='iTEXT'>Bee</span>" +
@@ -38,10 +38,7 @@ $('#theModal').on('shown.bs.modal', function (e) {
                             "</div>" +
                             "<div class='img_holder' onclick='myfuunc(this, \"" + key + "\", \"content/img/greenshield.jpg\");' onmouseover='showww(\"" + key + "\");'>" +
                                 "<img class='flagimgs first' src='content/img/greenshield.jpg' height=30 width=30 /> <span class='iTEXT'>Greenshield</span>" +
-                            "</div>" +                                            
-                            "<div class='img_holder' onclick='myfuunc(this, \"" + key + "\", \"content/img/blackstar.png\");' onmouseover='showww(\"" + key + "\");'>" +
-                                "<img class='flagimgs first' src='content/img/blackstar.png' height=30 width=30 /> <span class='iTEXT'>Blackstar</span>" +
-                            "</div>" +  
+                            "</div>" +                                             
                         "</div>" +
                     "</td>" +
                     "</tr>"
@@ -67,8 +64,8 @@ $("#filter_form").submit(function( event ) {
     }
 });
 
-var width = 400;
-var height = 700;
+var width = window.innerWidth  * 0.90;
+var height = window.innerHeight * 0.75;
 
 var svg = d3.select("#graphdiagram").append("svg")
     .attr("id", "mySvg")
@@ -88,7 +85,7 @@ function initSvg(){
 
     var force = d3.layout.force()
         .gravity(.05)
-        .distance(150)
+        .distance(400)
         .charge(-100)
         .size([width, height])
         .nodes(json.nodes)
@@ -114,10 +111,10 @@ function initSvg(){
         var icon = getIcon(this.__data__.CCLASSIFICATIONID);
         d3.select(this).append("image")
             .attr("xlink:href", icon)
-            .attr("x", -8)
-            .attr("y", -8)
-            .attr("width", 16)
-            .attr("height", 16);
+            .attr("x", -34)
+            .attr("y", -34)
+            .attr("width", 32)
+            .attr("height", 32);
     });
 
     nodes.append("text")
@@ -266,7 +263,8 @@ function initSvg(){
                             .style("fill", "red")
                             .style("stroke", "red")
                             .style("stroke-width", ".5px")
-                            .style("font", "12px sans-serif");
+                            .style("font-size", "16px")
+                            .style("font-family", "sans-serif");
                     } else {
                         d3.select(this).attr("selected", "false");
                         d3.select(this).select("text").transition()
@@ -274,7 +272,9 @@ function initSvg(){
                             .style("fill", "#333")
                             .style("stroke", "#333")
                             .style("stroke-width", ".5px")
-                            .style("font", "10px sans-serif");
+                            .style("font-size", "16px")
+                            .style("font-family", "sans-serif");
+
                         var name = d.name;
                         var foundLines = _.filter( svg.selectAll("line")[0], function(o, d){
                             return (o.__data__.source.name === name || o.__data__.target.name === name);
@@ -317,7 +317,8 @@ function click() {
         .style("fill", "red")
         .style("stroke", "red")
         .style("stroke-width", ".35px")
-        .style("font", "12px sans-serif");
+        .style("font-size", "16px")
+        .style("font-family", "sans-serif");
     svg.select(".selection").remove();
 
 }
@@ -342,10 +343,10 @@ function applyIcons(){
         var icon =  getIcon(this.__data__.CCLASSIFICATIONID);
         d3.select(this).append("image")
             .attr("xlink:href", icon)
-            .attr("x", -8)
-            .attr("y", -8)
-            .attr("width", 16)
-            .attr("height", 16);
+            .attr("x", -16)
+            .attr("y", -16)
+            .attr("width", 32)
+            .attr("height", 32);
     });
     $('#theModal').modal('hide')
 
@@ -362,7 +363,7 @@ function getIcon(classificationId){
     catch(e){
         console.log("An error occured", e);
     }
-    return foundData.iconName;
+    return  foundData.iconName;
 }
 function selectNodes(selectedNodes){
   d3.selectAll("g.node")  //here"s how you get all the nodes
@@ -379,8 +380,9 @@ function selectNodes(selectedNodes){
                 .style("fill", "red")
                 .style("stroke", "red")
                 .style("stroke-width", ".35px")
-                .style("font", "12px sans-serif");
-        } else{
+                .style("font-size", "16px")
+                .style("font-family", "sans-serif");
+            } else{
             d3.select(this).attr("selected", "false");
             d3.select(this).select("text").transition()
                 .duration(250)
@@ -388,12 +390,13 @@ function selectNodes(selectedNodes){
                 .style("fill", "#333")
                 .style("stroke", "#333")
                 .style("stroke-width", ".35px")
-                .style("font", "10px sans-serif");
+                .style("font-size", "16px")
+                .style("font-family", "sans-serif");
         }
     }
   );
 }
-function setSelectedStyle(selectedNodes, fontSetting, fontColor){
+function setSelectedStyle(selectedNodes, fontColor, fontSize, fontFamily, isBold){
     var that = this;
     d3.selectAll("g.node")  //here"s how you get all the nodes
         .each(function(d) {
@@ -410,14 +413,16 @@ function setSelectedStyle(selectedNodes, fontSetting, fontColor){
                 .style("fill", fontColor)
                 .style("stroke", fontColor)
                 .style("stroke-width", ".35px")
-                .style("font", fontSetting);
+                .style("font-size", fontSize)
+                .style("font-family", fontFamily);
         } else {
             d3.select(this).select("text").transition()
                 .duration(250)
                 .style("fill", "#333")
                 .style("stroke", "#333")
                 .style("stroke-width", ".35px")
-                .style("font", "10px sans-serif");           
+                .style("font-size", "16px")
+                .style("font-family", "sans-serif");
             }
     }); 
   
@@ -452,7 +457,9 @@ function setSelectedStyle(selectedNodes, fontSetting, fontColor){
 
         if(foundTexts !== null && typeof(foundTexts) !== 'undefined' && foundTexts.length > 0){
             _.forEach(foundTexts, function(foundText){
-                foundText.style.font = fontSetting;
+                foundText.style.fontSize = fontSize;
+                foundText.style.fontFamily = fontFamily;
+                foundText.style.bold = isBold;
                 foundText.style.fill = fontColor;
             });
         } 

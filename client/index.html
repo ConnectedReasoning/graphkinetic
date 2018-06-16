@@ -22,46 +22,41 @@
 </head>
 <body>
     <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="well">
-            <div clas="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <button type="button" href="modals/pngModal.html" class="btn btn-d3graph btnModal">
-                    Save as PNG
-                  </button>
-                  <button type="button" href="modals/pdfModal.html" class="btn btn-d3graph btnModal">
-                    Save as PDF
-                  </button>
-                  <button type="button" href="modals/styleModal.html" class="btn btn-d3graph btnModal">
-                    Style Settings
-                  </button>
-                  <button id="classification" type="button" href="modals/classificationModal.html" class="btn btn-d3graph btnModal">
-                    Icon Settings
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <form id="filter_form" class="form-inline">
-                  <div class="form-group">
-                    <input id="filter" type="text" class="form-control" placeholder="Search">
-                    <button id="filter_button" type="submit" class="btn btn-d3graph">Select</button>
-                  </div>
-                </form>
-              </div>
-            </div>
+      <h1>D3 file operations and style settings demo</h1>
+      <h4>Click on icon or click and drag to select multiple nodes. Set text styles. Search nodes. Save diagram as png or pdf.</h4>
+      <div class="well row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <button type="button" href="modals/styleModal.html" class="btn btn-primary btnModal">
+              Style Settings
+            </button>
+            <button id="classification" type="button" href="modals/classificationModal.html" class="btn btn-primary btnModal">
+              Icon Settings
+            </button>
+            <button type="button" href="modals/pngModal.html" class="btn btn-primary btnModal">
+              Save as PNG
+            </button>
+            <button type="button" href="modals/pdfModal.html" class="btn btn-primary btnModal">
+              Save as PDF
+            </button>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div id="graphdiagram"></div> 
+        <div class="col-md-6">
+          <form id="filter_form" class="form-inline">
+            <div class="form-group">
+              <input id="filter" type="text" class="form-control" placeholder="Search">
+              <button id="filter_button" type="submit" class="btn btn-primary btn-search">Select</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div id="graphdiagram"></div> 
+      </div>
+    </div>
+
     <div class="modal fade" id="theModal" tabindex="-1" role="dialog" aria-labelledby="pngModalLabel">
       <div class="modal-dialog modal-md" role="document">
         <div class="modal-content" />

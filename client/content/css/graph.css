@@ -8,20 +8,12 @@
 }
 .node text {
     pointer-events: none;
-    font: 10px sans-serif;
 }
-.btn.btn-d3graph{
-    font-family: 'nunito sans';
-    color: white;
-    background: #1465ae;
-    border-radius: 0;
-    margin:2px;
-    width:150px;
-}
+
 input#filter{
     margin-bottom:20px
 }
-.btn.btn-d3graph:hover, .btn.btn-d3graph:focus, .btn.btn-d3graph.focus {
+.btn.btn-primary:hover, .btn.btn-primary:focus, .btn.btn-primary.focus {
     color: #ddd;
     text-decoration: none;
 }
