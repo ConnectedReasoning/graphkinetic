@@ -19,4 +19,5 @@
 .image-dropdown div.iTEXT {
   position: relative;
   height:32px;
+  cursor:pointer;
 }

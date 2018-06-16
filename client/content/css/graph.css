@@ -9,7 +9,10 @@
 .node text {
     pointer-events: none;
 }
-
+.lemis{
+    font-size: 16px;
+    padding:10px 30px;
+}
 input#filter{
     margin-bottom:20px
 }
@@ -17,7 +20,9 @@ input#filter{
     color: #ddd;
     text-decoration: none;
 }
-
+image{
+    cursor:pointer;
+}
 div.modal-header{
     padding: 15px;
     background-color: #1465ae;
