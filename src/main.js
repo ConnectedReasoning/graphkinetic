@@ -8,6 +8,10 @@ import './css/dd.css';
 import './css/graph.css';
 import './css/materialize.min.css';
 import './css/common.css';
+import './scripts/jspdf';
+import * as saveSvgAsPngMod from './scripts/saveSvgAsPng';
+import './scripts/saveSvgAsPdf';
+
 
 // remove out if you don't want a Promise polyfill (remove also from webpack.config.js)
 Bluebird.config({ warnings: { wForgottenReturn: false } });

@@ -60,18 +60,32 @@
   </div>
   <div id="pdf-modal" class="modal">
     <div class="modal-content">
-      <h4>Modal Title</h4>
+      <h4>Save as PDF</h4>
     </div>
     <div class="p-a-30">
-      modal content
+      <form id="pdf_form">
+        <div class="form-group">
+          <label for="pdf_file">Save PDF as</label>
+          <input id="pdf_file" type="text" class="form-control" value.bind="pdfFile"placeholder="">
+        </div>
+      <button type="button" class="btn btn-primary" data-dismiss="modal" click.delegate="onClosePdfModal()">Close</button>
+      <button type="submit" class="btn btn-primary" click.delegate="savePDF()">Save PDF</button>
+      </form>
     </div>
   </div>
   <div id="png-modal" class="modal">
     <div class="modal-content">
-      <h4>Modal Title</h4>
+      <h4>Save as PNG</h4>
     </div>
     <div class="p-a-30">
-      modal content
+      <form id="png_form">
+        <div class="form-group">
+          <label for="png_file">Save PNG as</label>
+          <input id="png_file" type="text" class="form-control" value.bind="pngFile" placeholder="">
+        </div>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" click.delegate="onClosePngModal()">Close</button>
+        <button type="button" class="btn btn-primary" click.delegate="savePNG()">Save changes</button>
+      </form>
     </div>
   </div>
   <div id="classification-modal" class="modal">
@@ -104,7 +118,8 @@
           </tr>
         </tbody>
       </table>
-      <button id="btnApplyIcon" class="btn btn-primary " click.delegate="applyIcons()">Apply</button>
+      <button class="btn btn-primary" click.delegate="onCloseClassificationModal()">Close</button>
+      <button class="btn btn-primary" click.delegate="applyIcons()">Apply</button>
 
     </div>
   </div>

@@ -1,18 +1,16 @@
-/**
- * @param {SVGElement} svg
- * @param {Function} callback
- * @param {jsPDF} callback.pdf
- * */
-function svg_to_pdf(svg, callback) {
-  svgAsDataUri(svg, {}, function(svg_uri) {
-    var image = document.createElement('img');
+//import './saveSvgAsPng';
+//import './jspdf';
 
-    image.src = svg_uri;
+function svgToPdf(svg, callback) {
+  saveSvgAsPng.svgAsDataUri(svg, {}, function(svgUri) {
+    let image = document.createElement('img');
+
+    image.src = svgUri;
     image.onload = function() {
-      var canvas = document.createElement('canvas');
-      var context = canvas.getContext('2d');
-      var doc = new jsPDF('portrait', 'pt');
-      var dataUrl;
+      let canvas = document.createElement('canvas');
+      let context = canvas.getContext('2d');
+      let doc = new jsPDF('portrait', 'pt');
+      let dataUrl = null;
 
       canvas.width = image.width;
       canvas.height = image.height;
@@ -25,12 +23,9 @@ function svg_to_pdf(svg, callback) {
   });
 }
 
-/**
- * @param {string} name Name of the file
- * @param {string} dataUriString
-*/
-function download_pdf(name, dataUriString) {
-  var link = document.createElement('a');
+
+function downloadPdf(name, dataUriString) {
+  let link = document.createElement('a');
   link.addEventListener('click', function(ev) {
     link.href = dataUriString;
     link.download = name;
@@ -39,3 +34,8 @@ function download_pdf(name, dataUriString) {
   document.body.appendChild(link);
   link.click();
 }
+module.exports = {
+  svgToPdf: svgToPdf,
+  downloadPdf: downloadPdf
+};
+

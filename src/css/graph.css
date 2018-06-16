@@ -10,20 +10,7 @@
 input#filter{
     margin-bottom:20px
 }
-.btn.btn-d3graph:hover, .btn.btn-d3graph:focus, .btn.btn-d3graph.focus {
-    color: #ddd;
-    text-decoration: none;
-}
 
-div.modal-header{
-    padding: 15px;
-    background-color: #1465ae;
-    color: white;
-    font-family: 'nunito sans'
-}
-.modal-content{
-    border-radius:0px;
-}
 .selection {
     stroke          : gray;
     stroke-width    : 1px;

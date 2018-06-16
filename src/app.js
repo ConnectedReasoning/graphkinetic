@@ -1,6 +1,8 @@
 import {inject, DOM, noView, bindable} from 'aurelia-framework';
 import * as _ from 'lodash';
 import 'materialize-css';
+import * as saveSvgAsPngMod from './scripts/saveSvgAsPng';
+
 import * as d3 from 'd3';
 import * as $ from 'jquery';
 @inject(DOM.Element)
@@ -15,9 +17,12 @@ export class app {
     this.initSvg.bind(this);
     this.getIcon.bind(this);
     this.selectedIcon = null;
+    this.pngFile = '';
+    this.pdfFile = '';
   }
   attached() {
     this.svg = d3.select(this.graphDiagram).append('svg')
+    .attr('id', 'mySvg')
     .attr('width', this.width)
     .attr('height', this.height);
     this.initIcons();
@@ -113,14 +118,14 @@ export class app {
     this.pdfModal[0].open();
   }
   onClosePdfModal() {
-    this.pdfModal.close();
+    this.pdfModal[0].close();
   }
 
   onOpenPngModal() {
     this.pngModal[0].open();
   }
   onClosePngModal() {
-    this.pngModal.close();
+    this.pngModal[0].close();
   }
 
   onOpenClassificationModal() {
@@ -160,22 +165,6 @@ export class app {
     this.icons[index].iconName = iconname;
     localStorage.setItem('icons', JSON.stringify(this.icons));
     this.setOpenClassificationModalContent();
-  }
-
-  applyIcons() {
-    const self = this;
-    const nodes = this.svg.selectAll('.node');
-    this.svg.selectAll('g.node image').remove();
-    nodes.each(function(d) {
-      const icon =  self.getIcon(d.CCLASSIFICATIONID);
-      d3.select(this).append('image')
-          .attr('xlink:href', icon)
-          .attr('x', -32)
-          .attr('y', -20)
-          .attr('width', 42)
-          .attr('height', 42);
-    });
-    this.onCloseClassificationModal();
   }
 
   getIcon(classificationId) {
@@ -249,6 +238,34 @@ export class app {
         }
       });
     $('#theModal').modal('hide');
+  }
+
+  applyIcons() {
+    const self = this;
+    const nodes = this.svg.selectAll('.node');
+    this.svg.selectAll('g.node image').remove();
+    nodes.each(function(d) {
+      const icon =  self.getIcon(d.CCLASSIFICATIONID);
+      d3.select(this).append('image')
+          .attr('xlink:href', icon)
+          .attr('x', -32)
+          .attr('y', -20)
+          .attr('width', 42)
+          .attr('height', 42);
+    });
+    this.onCloseClassificationModal();
+  }
+
+  savePDF() {
+    const mySVG = document.getElementById('mySvg');
+    this.svgToPdf( mySVG, function(pdf) {
+      console.log('in savePDF. pdf file is ', pdf);
+      //download_pdf($('#pdf_file')[0].value, pdf.output('dataurlstring'));
+    });
+  }
+  savePNG() {
+    saveSvgAsPng(document.getElementById('mySvg'), this.pngFile, {backgroundColor: '#ffffff'});
+    console.log('in savePNG file is ', this.pngFile);
   }
 
   getData() {
@@ -465,9 +482,43 @@ export class app {
       ]
     };
   }
+
   showIcon(key) {
     const dropd = document.getElementById('image-dropdown_' + key);
     dropd.style.height = '120px';
     dropd.style.overflow = 'scroll';
+  }
+
+  svgToPdf(svg, callback) {
+    saveSvgAsPngMod.svgAsDataUri(svg, {}, function(svgUri) {
+      const image = document.createElement('img');
+
+      image.src = svgUri;
+      image.onload = function() {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        const doc = new jsPDF('portrait', 'pt');
+        let dataUrl = null;
+
+        canvas.width = image.width;
+        canvas.height = image.height;
+        context.drawImage(image, 0, 0, image.width, image.height);
+        dataUrl = canvas.toDataURL('image/jpeg');
+        doc.addImage(dataUrl, 'JPEG', 0, 0, image.width, image.height);
+
+        callback(doc);
+      };
+    });
+  }
+
+  downloadPdf(name, dataUriString) {
+    const link = document.createElement('a');
+    link.addEventListener('click', function(ev) {
+      link.href = dataUriString;
+      link.download = name;
+      document.body.removeChild(link);
+    }, false);
+    document.body.appendChild(link);
+    link.click();
   }
 }
